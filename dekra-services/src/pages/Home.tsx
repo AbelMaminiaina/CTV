@@ -213,13 +213,13 @@ const Home: React.FC = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 transition-all duration-500">
                 <Link to={currentHero.primaryLink} key={`primary-${currentSlide}`}>
-                  <button className="px-8 py-3 bg-primary-400 hover:bg-primary-500 text-white font-semibold rounded-full transition-all duration-200 flex items-center justify-center gap-2 w-full sm:w-auto shadow-lg hover:shadow-xl">
+                  <button className="px-8 py-3 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-full transition-all duration-200 flex items-center justify-center gap-2 w-full sm:w-auto shadow-lg hover:shadow-xl">
                     {currentHero.primaryBtn}
                     <ArrowRight size={20} />
                   </button>
                 </Link>
                 <Link to={currentHero.secondaryLink} key={`secondary-${currentSlide}`}>
-                  <button className="px-8 py-3 border-2 border-white text-white hover:bg-white hover:text-primary-700 font-semibold rounded-full transition-all duration-200 flex items-center justify-center gap-2 w-full sm:w-auto">
+                  <button className="px-8 py-3 border-2 border-white text-white hover:bg-white hover:text-gray-900 font-semibold rounded-full transition-all duration-200 flex items-center justify-center gap-2 w-full sm:w-auto">
                     {currentHero.secondaryBtn}
                     <ArrowRight size={20} />
                   </button>

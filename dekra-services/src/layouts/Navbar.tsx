@@ -1,23 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, ChevronDown, User, Calendar } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const { isAuthenticated, logout } = useAuth();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY < lastScrollY || currentScrollY < 10) {
+        // Scrolling up or at the top
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down and past threshold
+        setIsVisible(false);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [lastScrollY]);
+
   return (
-    <>
+    <div
+      className={`sticky top-0 z-50 transition-transform duration-300 ${
+        isVisible ? 'translate-y-0' : '-translate-y-full'
+      }`}
+    >
       {/* Top Bar - Contact Button */}
-      <div className="bg-primary-700 text-white py-2">
+      <div className="bg-primary-600 text-white py-2">
         <div className="container-custom">
           <div className="flex justify-end items-center">
             <Link
               to="/contact"
-              className="flex items-center gap-2 bg-white text-primary-700 px-6 py-2 rounded-full font-semibold hover:bg-primary-50 transition-all shadow-md hover:shadow-lg"
+              className="flex items-center gap-2 bg-white text-primary-600 px-6 py-2 rounded-full font-semibold hover:bg-primary-50 transition-all shadow-md hover:shadow-lg"
             >
               <Calendar size={20} />
               <span>Contact</span>
@@ -27,11 +55,11 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Main Navbar */}
-      <nav className="bg-white shadow-lg sticky top-0 z-50">
+      <nav className="bg-white shadow-lg">
       <div className="container-custom">
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center">
+            <div className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-xl">TS</span>
             </div>
             <span className="text-xl font-bold text-gray-900">TechServices</span>
@@ -181,7 +209,7 @@ const Navbar: React.FC = () => {
         )}
         </div>
       </nav>
-    </>
+    </div>
   );
 };
 
