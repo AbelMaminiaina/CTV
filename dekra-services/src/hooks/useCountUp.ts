@@ -19,7 +19,6 @@ export const useCountUp = ({
     if (!isActive) return;
 
     const startTime = Date.now();
-    const endTime = startTime + duration;
     const range = end - start;
 
     const timer = setInterval(() => {
