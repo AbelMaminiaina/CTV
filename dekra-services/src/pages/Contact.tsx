@@ -91,11 +91,15 @@ const Contact: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <section className="bg-gradient-to-r from-primary-600 to-primary-800 text-white py-16">
-        <div className="container-custom">
-          <h1 className="text-5xl font-bold mb-4">Contactez-nous</h1>
-          <p className="text-xl text-primary-100 max-w-3xl">
+      {/* Header Banner with Image */}
+      <section className="relative h-[400px] bg-cover bg-center" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1423666639041-f56000c27a9a?auto=format&fit=crop&w=1920&q=80)' }}>
+        {/* Overlay sombre pour lisibilité */}
+        <div className="absolute inset-0 bg-black/40"></div>
+
+        {/* Content */}
+        <div className="relative h-full container-custom flex flex-col justify-center">
+          <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">Contactez-nous</h1>
+          <p className="text-xl md:text-2xl text-white max-w-3xl">
             Notre équipe d'experts est à votre disposition pour répondre à toutes vos questions et vous accompagner dans vos projets.
           </p>
         </div>

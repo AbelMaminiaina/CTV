@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { CheckCircle, Award, Shield, Users, ArrowRight, Star, Search, ChevronLeft, ChevronRight } from 'lucide-react';
+import { CheckCircle, Award, Shield, Users, ArrowRight, Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import Button from '../components/Button';
 import Card from '../components/Card';
 import type { Testimonial } from '../types';
@@ -38,7 +38,6 @@ const AnimatedStat: React.FC<AnimatedStatProps> = ({
 };
 
 const Home: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState('');
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const heroSlides = [
@@ -135,11 +134,6 @@ const Home: React.FC = () => {
     { value: 98, suffix: '%', label: 'Taux de satisfaction' },
   ];
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Recherche:', searchQuery);
-  };
-
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
   };
@@ -152,30 +146,6 @@ const Home: React.FC = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Search Bar */}
-      <section className="bg-gray-50 py-6 border-b">
-        <div className="container-custom">
-          <form onSubmit={handleSearch} className="flex gap-4 max-w-3xl mx-auto">
-            <div className="flex-1 relative">
-              <input
-                type="text"
-                placeholder="Rechercher un service..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-6 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-              />
-            </div>
-            <button
-              type="submit"
-              className="px-8 py-3 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-full transition-colors flex items-center gap-2"
-            >
-              <Search size={20} />
-              Rechercher
-            </button>
-          </form>
-        </div>
-      </section>
-
       {/* Hero Section with Carousel */}
       <section className="relative h-[600px] overflow-hidden">
         {/* Background Images - Dynamique */}
@@ -425,14 +395,17 @@ const Home: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-primary-600 text-white">
-        <div className="container-custom text-center">
-          <h2 className="text-4xl font-bold mb-6">Prêt à Commencer ?</h2>
-          <p className="text-xl mb-8 text-primary-100 max-w-2xl mx-auto">
+      <section className="relative py-20 bg-cover bg-center overflow-hidden" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1920&q=80)' }}>
+        {/* Overlay sombre pour la lisibilité */}
+        <div className="absolute inset-0 bg-black/40"></div>
+
+        <div className="container-custom text-center relative z-10">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">Prêt à Commencer ?</h2>
+          <p className="text-xl mb-8 text-white max-w-2xl mx-auto">
             Contactez-nous dès aujourd'hui pour discuter de vos besoins et découvrir comment nous pouvons vous aider
           </p>
           <Link to="/contact">
-            <Button size="lg" className="bg-white text-primary-600 hover:bg-primary-50">
+            <Button size="lg" className="bg-primary-600 text-white hover:bg-primary-700">
               Demander un devis gratuit
               <ArrowRight className="ml-2 inline" size={20} />
             </Button>

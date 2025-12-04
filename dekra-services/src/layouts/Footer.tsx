@@ -9,11 +9,8 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">TS</span>
-              </div>
-              <span className="text-xl font-bold">TechServices</span>
+            <div className="mb-4">
+              <img src="/logo.svg" alt="TechServices Logo" className="h-12" />
             </div>
             <p className="text-gray-400 mb-4">
               Leader des services techniques, certifications et inspections pour garantir la qualité et la sécurité de vos projets.

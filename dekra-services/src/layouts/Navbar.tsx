@@ -1,215 +1,148 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, X, ChevronDown, User, Calendar } from 'lucide-react';
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { Home, Briefcase, Layers, Info, Phone, User, LogOut } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const Navbar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [manuallyCollapsed, setManuallyCollapsed] = useState(false);
   const { isAuthenticated, logout } = useAuth();
+  const location = useLocation();
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const navItems = [
+    { path: '/', icon: Home, label: 'Accueil' },
+    { path: '/services', icon: Briefcase, label: 'Services' },
+    { path: '/solutions', icon: Layers, label: 'Solutions' },
+    { path: '/about', icon: Info, label: 'À Propos' },
+    { path: '/contact', icon: Phone, label: 'Contact' },
+  ];
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
+  const handleMouseEnter = () => {
+    if (!manuallyCollapsed) {
+      setIsExpanded(true);
+    }
+  };
 
-      if (currentScrollY < lastScrollY || currentScrollY < 10) {
-        // Scrolling up or at the top
-        setIsVisible(true);
-      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        // Scrolling down and past threshold
-        setIsVisible(false);
-      }
+  const handleMouseLeave = () => {
+    setIsExpanded(false);
+    setManuallyCollapsed(false);
+  };
 
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [lastScrollY]);
+  const handleMenuClick = () => {
+    setIsExpanded(false);
+    setManuallyCollapsed(true);
+  };
 
   return (
-    <div
-      className={`sticky top-0 z-50 transition-transform duration-300 ${
-        isVisible ? 'translate-y-0' : '-translate-y-full'
-      }`}
-    >
-      {/* Top Bar - Contact Button */}
-      <div className="bg-primary-600 text-white py-2">
-        <div className="container-custom">
-          <div className="flex justify-end items-center">
-            <Link
-              to="/contact"
-              className="flex items-center gap-2 bg-white text-primary-600 px-6 py-2 rounded-full font-semibold hover:bg-primary-50 transition-all shadow-md hover:shadow-lg"
-            >
-              <Calendar size={20} />
-              <span>Contact</span>
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Navbar */}
-      <nav className="bg-white shadow-lg">
-      <div className="container-custom">
-        <div className="flex justify-between items-center h-16">
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xl">TS</span>
+    <>
+      {/* Vertical Sidebar */}
+      <nav
+        className={`fixed left-0 top-0 h-screen bg-white/5 backdrop-blur-md shadow-2xl z-50 transition-all duration-300 ${
+          isExpanded ? 'w-64' : 'w-20'
+        }`}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <div className="flex flex-col h-full py-6">
+          {/* Logo */}
+          <Link to="/" onClick={handleMenuClick} className="flex items-center px-4 mb-8">
+            <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center shadow-lg flex-shrink-0">
+              <span className="text-primary-600 font-bold text-xl">TS</span>
             </div>
-            <span className="text-xl font-bold text-gray-900">TechServices</span>
+            <span
+              className={`ml-3 text-gray-800 font-bold text-lg whitespace-nowrap transition-all duration-300 ${
+                isExpanded ? 'opacity-100 w-auto' : 'opacity-0 w-0 overflow-hidden'
+              }`}
+            >
+              TechServices
+            </span>
           </Link>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="text-gray-700 hover:text-primary-600 transition-colors">
-              Accueil
-            </Link>
+          {/* Navigation Items */}
+          <div className="flex-1 flex flex-col space-y-2 px-3">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = location.pathname === item.path;
 
-            <div className="relative group">
-              <button className="flex items-center space-x-1 text-gray-700 hover:text-primary-600 transition-colors">
-                <span>Services</span>
-                <ChevronDown size={16} />
-              </button>
-              <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute top-full left-0 pt-2 transition-all duration-200">
-                <div className="w-56 bg-white rounded-lg shadow-xl py-2">
-                  <Link
-                    to="/services"
-                    className="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors"
-                  >
-                    Tous les services
-                  </Link>
-                  <Link
-                    to="/services?category=certification"
-                    className="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors"
-                  >
-                    Certifications
-                  </Link>
-                  <Link
-                    to="/services?category=inspection"
-                    className="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors"
-                  >
-                    Inspections
-                  </Link>
-                  <Link
-                    to="/services?category=testing"
-                    className="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors"
-                  >
-                    Tests & Analyses
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            <Link to="/solutions" className="text-gray-700 hover:text-primary-600 transition-colors">
-              Solutions
-            </Link>
-
-            <Link to="/about" className="text-gray-700 hover:text-primary-600 transition-colors">
-              À propos
-            </Link>
-
-            {isAuthenticated ? (
-              <div className="flex items-center space-x-4">
+              return (
                 <Link
-                  to="/client"
-                  className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors"
+                  key={item.path}
+                  to={item.path}
+                  onClick={handleMenuClick}
+                  className={`flex items-center px-3 py-3 rounded-lg transition-all duration-200 ${
+                    isActive
+                      ? 'bg-primary-600 text-white shadow-lg'
+                      : 'text-gray-800 hover:bg-primary-100'
+                  }`}
                 >
-                  <User size={20} />
-                  <span>Espace Client</span>
+                  <Icon size={24} className="flex-shrink-0" />
+                  <span
+                    className={`ml-4 font-medium whitespace-nowrap transition-all duration-300 ${
+                      isExpanded ? 'opacity-100 w-auto' : 'opacity-0 w-0 overflow-hidden'
+                    }`}
+                  >
+                    {item.label}
+                  </span>
                 </Link>
-                <button
-                  onClick={logout}
-                  className="text-sm text-gray-600 hover:text-red-600 transition-colors"
-                >
-                  Déconnexion
-                </button>
-              </div>
-            ) : (
-              <Link
-                to="/client"
-                className="bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700 transition-colors"
-              >
-                Connexion
-              </Link>
-            )}
+              );
+            })}
           </div>
 
-          {/* Mobile Menu Button */}
-          <button onClick={toggleMenu} className="md:hidden p-2">
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        {isOpen && (
-          <div className="md:hidden py-4 space-y-4">
-            <Link
-              to="/"
-              className="block text-gray-700 hover:text-primary-600 transition-colors"
-              onClick={toggleMenu}
-            >
-              Accueil
-            </Link>
-            <Link
-              to="/services"
-              className="block text-gray-700 hover:text-primary-600 transition-colors"
-              onClick={toggleMenu}
-            >
-              Services
-            </Link>
-            <Link
-              to="/solutions"
-              className="block text-gray-700 hover:text-primary-600 transition-colors"
-              onClick={toggleMenu}
-            >
-              Solutions
-            </Link>
-            <Link
-              to="/about"
-              className="block text-gray-700 hover:text-primary-600 transition-colors"
-              onClick={toggleMenu}
-            >
-              À propos
-            </Link>
+          {/* User Section */}
+          <div className="px-3 mt-auto pt-4 border-t border-gray-300">
             {isAuthenticated ? (
               <>
                 <Link
                   to="/client"
-                  className="block text-gray-700 hover:text-primary-600 transition-colors"
-                  onClick={toggleMenu}
+                  onClick={handleMenuClick}
+                  className="flex items-center px-3 py-3 rounded-lg text-gray-800 hover:bg-primary-100 transition-all duration-200 mb-2"
                 >
-                  Espace Client
+                  <User size={24} className="flex-shrink-0" />
+                  <span
+                    className={`ml-4 font-medium whitespace-nowrap transition-all duration-300 ${
+                      isExpanded ? 'opacity-100 w-auto' : 'opacity-0 w-0 overflow-hidden'
+                    }`}
+                  >
+                    Espace Client
+                  </span>
                 </Link>
                 <button
                   onClick={() => {
                     logout();
-                    toggleMenu();
+                    handleMenuClick();
                   }}
-                  className="block text-red-600 hover:text-red-700 transition-colors"
+                  className="flex items-center px-3 py-3 rounded-lg text-gray-800 hover:bg-red-100 transition-all duration-200 w-full"
                 >
-                  Déconnexion
+                  <LogOut size={24} className="flex-shrink-0" />
+                  <span
+                    className={`ml-4 font-medium whitespace-nowrap transition-all duration-300 ${
+                      isExpanded ? 'opacity-100 w-auto' : 'opacity-0 w-0 overflow-hidden'
+                    }`}
+                  >
+                    Déconnexion
+                  </span>
                 </button>
               </>
             ) : (
               <Link
                 to="/client"
-                className="block text-primary-600 font-semibold hover:text-primary-700 transition-colors"
-                onClick={toggleMenu}
+                onClick={handleMenuClick}
+                className="flex items-center px-3 py-3 rounded-lg bg-primary-600 text-white hover:bg-primary-700 transition-all duration-200 shadow-lg"
               >
-                Connexion
+                <User size={24} className="flex-shrink-0" />
+                <span
+                  className={`ml-4 font-medium whitespace-nowrap transition-all duration-300 ${
+                    isExpanded ? 'opacity-100 w-auto' : 'opacity-0 w-0 overflow-hidden'
+                  }`}
+                >
+                  Connexion
+                </span>
               </Link>
             )}
           </div>
-        )}
         </div>
       </nav>
-    </div>
+    </>
   );
 };
 
