@@ -35,6 +35,20 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
       },
+      keyframes: {
+        'zoom-in': {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.2)' },
+        },
+        'zoom-in-mobile': {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.1)' },
+        },
+      },
+      animation: {
+        'zoom-in': 'zoom-in 20s ease-in-out infinite',
+        'zoom-in-mobile': 'zoom-in-mobile 20s ease-in-out infinite',
+      },
     },
   },
   plugins: [],

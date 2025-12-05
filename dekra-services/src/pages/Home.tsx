@@ -39,8 +39,21 @@ const AnimatedStat: React.FC<AnimatedStatProps> = ({
 
 const Home: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [shouldAnimate] = useState(true);
 
   const heroSlides = [
+    {
+      title: 'Services Techniques et Certifications',
+      subtitle: '',
+      description: 'Planifiez dès maintenant pour prendre un service',
+      primaryBtn: 'Contactez-nous',
+      secondaryBtn: '',
+      primaryLink: '/contact',
+      secondaryLink: '',
+      bgImage: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1920&q=80',
+      bgAlt: 'Route paisible en campagne',
+      showRightCard: true,
+    },
     {
       title: 'Votre Partenaire de Confiance',
       subtitle: 'Services Techniques et Certifications',
@@ -49,8 +62,8 @@ const Home: React.FC = () => {
       secondaryBtn: 'Nous contacter',
       primaryLink: '/services',
       secondaryLink: '/contact',
-      bgImage: 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=1920&q=80',
-      bgAlt: 'Voiture moderne',
+      bgImage: 'https://images.unsplash.com/photo-1625047509168-a7026f36de04?auto=format&fit=crop&w=1920&q=80',
+      bgAlt: 'Service technique automobile',
     },
     {
       title: 'Certification ISO',
@@ -152,57 +165,96 @@ const Home: React.FC = () => {
         {heroSlides.map((slide, index) => (
           <div
             key={index}
-            className={`absolute inset-0 bg-cover bg-center transition-opacity duration-700 ${
+            className={`absolute inset-0 transition-opacity duration-700 ${
               index === currentSlide ? 'opacity-100' : 'opacity-0'
             }`}
-            style={{
-              backgroundImage: `url(${slide.bgImage})`,
-            }}
           >
-            {/* Overlay pour améliorer la lisibilité */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"></div>
+            <div
+              className={`absolute inset-0 bg-cover bg-center ${
+                index === currentSlide && shouldAnimate
+                  ? 'animate-zoom-in-mobile md:animate-zoom-in'
+                  : ''
+              }`}
+              style={{
+                backgroundImage: `url(${slide.bgImage})`,
+              }}
+            >
+              {/* Overlay pour améliorer la lisibilité */}
+              {!slide.hideContent && !slide.showRightCard && (
+                <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"></div>
+              )}
+              {slide.showRightCard && (
+                <div className="absolute inset-0 bg-black/30"></div>
+              )}
+            </div>
           </div>
         ))}
 
         {/* Overlay supplémentaire pour uniformiser */}
-        <div className="absolute inset-0 bg-black/10"></div>
+        {!currentHero.hideContent && !currentHero.showRightCard && (
+          <div className="absolute inset-0 bg-black/10"></div>
+        )}
 
-        {/* Content */}
-        <div className="container-custom relative h-full flex items-center px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center w-full">
-            {/* Left Content Box - Style DEKRA avec animation */}
-            <div className="bg-primary-700 text-white p-6 md:p-12 rounded-xl shadow-2xl max-w-2xl backdrop-blur-sm bg-opacity-95 transition-all duration-500">
-              <h1 className="text-2xl md:text-5xl font-bold mb-3 md:mb-4 leading-tight transition-all duration-500">
+        {/* Content - Card transparent centré */}
+        {currentHero.showRightCard && (
+          <div className="container-custom relative h-full flex items-center justify-center px-4">
+            <div className="p-6 md:p-10 max-w-2xl w-full text-center transition-all duration-500">
+              <h1 className="text-3xl md:text-5xl font-bold mb-4 md:mb-6 text-white leading-tight drop-shadow-lg">
                 {currentHero.title}
               </h1>
-              <h2 className="text-lg md:text-2xl font-medium mb-4 md:mb-6 text-white transition-all duration-500">
-                {currentHero.subtitle}
-              </h2>
-              <p className="text-sm md:text-lg mb-6 md:mb-8 text-white/90 leading-relaxed transition-all duration-500">
+              <p className="text-lg md:text-xl mb-6 md:mb-8 text-white leading-relaxed drop-shadow-md">
                 {currentHero.description}
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 transition-all duration-500">
-                <Link to={currentHero.primaryLink} key={`primary-${currentSlide}`} className="w-full sm:w-auto">
-                  <button className="px-6 md:px-8 py-2.5 md:py-3 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-full transition-all duration-200 flex items-center justify-center gap-2 w-full shadow-lg hover:shadow-xl text-sm md:text-base">
-                    {currentHero.primaryBtn}
-                    <ArrowRight size={18} className="md:w-5 md:h-5" />
-                  </button>
-                </Link>
-                <Link to={currentHero.secondaryLink} key={`secondary-${currentSlide}`} className="w-full sm:w-auto">
-                  <button className="px-6 md:px-8 py-2.5 md:py-3 border-2 border-white text-white hover:bg-white hover:text-gray-900 font-semibold rounded-full transition-all duration-200 flex items-center justify-center gap-2 w-full text-sm md:text-base">
-                    {currentHero.secondaryBtn}
-                    <ArrowRight size={18} className="md:w-5 md:h-5" />
-                  </button>
-                </Link>
-              </div>
-            </div>
-
-            {/* Right Side - Espace pour équilibrer la grille */}
-            <div className="hidden md:block">
-              {/* Espace réservé - L'image de fond occupe tout l'arrière-plan */}
+              <Link to={currentHero.primaryLink} key={`primary-${currentSlide}`} className="inline-block">
+                <button className="px-8 md:px-12 py-3 md:py-4 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-full transition-all duration-200 flex items-center justify-center gap-2 shadow-xl hover:shadow-2xl text-base md:text-lg">
+                  {currentHero.primaryBtn}
+                  <ArrowRight size={20} className="md:w-6 md:h-6" />
+                </button>
+              </Link>
             </div>
           </div>
-        </div>
+        )}
+
+        {/* Content - Layout normal à gauche */}
+        {!currentHero.hideContent && !currentHero.showRightCard && (
+          <div className="container-custom relative h-full flex items-center px-4">
+            <div className="grid md:grid-cols-2 gap-12 items-center w-full">
+              {/* Left Content Box - Style blanc unifié avec taille réduite */}
+              <div className="bg-white p-5 md:p-8 rounded-2xl shadow-2xl max-w-lg backdrop-blur-sm bg-opacity-95 transition-all duration-500">
+                <h1 className="text-xl md:text-3xl font-bold mb-3 md:mb-4 leading-tight text-gray-900 transition-all duration-500">
+                  {currentHero.title}
+                </h1>
+                <h2 className="text-base md:text-xl font-medium mb-3 md:mb-4 text-gray-800 transition-all duration-500">
+                  {currentHero.subtitle}
+                </h2>
+                <p className="text-sm md:text-base mb-5 md:mb-6 text-gray-700 leading-relaxed transition-all duration-500">
+                  {currentHero.description}
+                </p>
+                <div className="flex flex-col sm:flex-row gap-2 md:gap-3 transition-all duration-500">
+                  <Link to={currentHero.primaryLink} key={`primary-${currentSlide}`} className="w-full sm:w-auto">
+                    <button className="px-5 md:px-6 py-2 md:py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-full transition-all duration-200 flex items-center justify-center gap-2 w-full shadow-lg hover:shadow-xl text-sm md:text-base">
+                      {currentHero.primaryBtn}
+                      <ArrowRight size={16} className="md:w-5 md:h-5" />
+                    </button>
+                  </Link>
+                  {currentHero.secondaryBtn && (
+                    <Link to={currentHero.secondaryLink} key={`secondary-${currentSlide}`} className="w-full sm:w-auto">
+                      <button className="px-5 md:px-6 py-2 md:py-2.5 border-2 border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white font-semibold rounded-full transition-all duration-200 flex items-center justify-center gap-2 w-full text-sm md:text-base">
+                        {currentHero.secondaryBtn}
+                        <ArrowRight size={16} className="md:w-5 md:h-5" />
+                      </button>
+                    </Link>
+                  )}
+                </div>
+              </div>
+
+              {/* Right Side - Espace pour équilibrer la grille */}
+              <div className="hidden md:block">
+                {/* Espace réservé - L'image de fond occupe tout l'arrière-plan */}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Carousel Navigation */}
         <div className="absolute bottom-4 md:bottom-8 left-0 right-0">
