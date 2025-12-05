@@ -180,7 +180,7 @@ const Home: React.FC = () => {
               }}
             >
               {/* Overlay pour améliorer la lisibilité */}
-              {!slide.hideContent && !slide.showRightCard && (
+              {!slide.showRightCard && (
                 <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"></div>
               )}
               {slide.showRightCard && (
@@ -191,7 +191,7 @@ const Home: React.FC = () => {
         ))}
 
         {/* Overlay supplémentaire pour uniformiser */}
-        {!currentHero.hideContent && !currentHero.showRightCard && (
+        {!currentHero.showRightCard && (
           <div className="absolute inset-0 bg-black/10"></div>
         )}
 
@@ -216,7 +216,7 @@ const Home: React.FC = () => {
         )}
 
         {/* Content - Layout normal à gauche */}
-        {!currentHero.hideContent && !currentHero.showRightCard && (
+        {!currentHero.showRightCard && (
           <div className="container-custom relative h-full flex items-center px-4">
             <div className="grid md:grid-cols-2 gap-12 items-center w-full">
               {/* Left Content Box - Style blanc unifié avec taille réduite */}
