@@ -65,13 +65,26 @@ const Navbar: React.FC = () => {
   return (
     <>
       {/* Bouton hamburger pour mobile */}
-      <button
-        onClick={toggleMobileMenu}
-        className="fixed top-4 left-4 z-[70] md:hidden w-12 h-12 bg-white/90 backdrop-blur-md rounded-lg shadow-lg flex items-center justify-center text-gray-800 hover:bg-white transition-colors"
-        aria-label="Toggle menu"
-      >
-        {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-      </button>
+      {!isMobileMenuOpen && (
+        <button
+          onClick={toggleMobileMenu}
+          className="fixed top-4 left-4 z-[100] md:hidden w-12 h-12 bg-white/90 backdrop-blur-md rounded-lg shadow-lg flex items-center justify-center text-gray-800 hover:bg-white transition-colors"
+          aria-label="Open menu"
+        >
+          <Menu size={24} />
+        </button>
+      )}
+
+      {/* Bouton close pour mobile */}
+      {isMobileMenuOpen && (
+        <button
+          onClick={toggleMobileMenu}
+          className="fixed top-4 right-4 z-[100] md:hidden w-12 h-12 bg-white rounded-lg shadow-lg flex items-center justify-center text-gray-800 hover:bg-gray-100 transition-colors"
+          aria-label="Close menu"
+        >
+          <X size={24} />
+        </button>
+      )}
 
 
       {/* Vertical Sidebar */}
