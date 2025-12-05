@@ -16,8 +16,8 @@ const SearchBar: React.FC = () => {
 
   return (
     <section className="bg-gray-50 py-3 md:py-4 border-b sticky top-0 z-40">
-      <div className="container-custom px-4">
-        <form onSubmit={handleSearch} className="flex gap-2 md:gap-4 max-w-3xl mx-auto">
+      <div className="container-custom md:px-4">
+        <form onSubmit={handleSearch} className="flex gap-2 md:gap-4 max-w-3xl md:mx-auto ml-16 mr-2">
           <div className="flex-1 relative">
             <input
               type="text"
