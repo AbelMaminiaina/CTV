@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Briefcase, Layers, Info, Phone, User, LogOut } from 'lucide-react';
+import { Home, Briefcase, Layers, Info, Phone, User, LogOut, Menu, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const Navbar: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [manuallyCollapsed, setManuallyCollapsed] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const { isAuthenticated, logout } = useAuth();
   const location = useLocation();
 
@@ -17,41 +19,93 @@ const Navbar: React.FC = () => {
     { path: '/contact', icon: Phone, label: 'Contact' },
   ];
 
+  // Détection de la taille de l'écran
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Fermer le menu mobile lors du changement de route
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location]);
+
   const handleMouseEnter = () => {
-    if (!manuallyCollapsed) {
+    if (!manuallyCollapsed && !isMobile) {
       setIsExpanded(true);
     }
   };
 
   const handleMouseLeave = () => {
-    setIsExpanded(false);
-    setManuallyCollapsed(false);
+    if (!isMobile) {
+      setIsExpanded(false);
+      setManuallyCollapsed(false);
+    }
   };
 
   const handleMenuClick = () => {
-    setIsExpanded(false);
-    setManuallyCollapsed(true);
+    if (isMobile) {
+      setIsMobileMenuOpen(false);
+    } else {
+      setIsExpanded(false);
+      setManuallyCollapsed(true);
+    }
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   return (
     <>
+      {/* Bouton hamburger pour mobile */}
+      <button
+        onClick={toggleMobileMenu}
+        className="fixed top-4 left-4 z-[60] md:hidden w-12 h-12 bg-white/90 backdrop-blur-md rounded-lg shadow-lg flex items-center justify-center text-gray-800 hover:bg-white transition-colors"
+        aria-label="Toggle menu"
+      >
+        {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+      </button>
+
+      {/* Overlay pour mobile */}
+      {isMobile && isMobileMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
       {/* Vertical Sidebar */}
       <nav
-        className={`fixed left-0 top-0 h-screen bg-white/5 backdrop-blur-md shadow-2xl z-50 transition-all duration-300 ${
-          isExpanded ? 'w-64' : 'w-20'
+        className={`fixed left-0 top-0 h-screen bg-white/5 backdrop-blur-md shadow-2xl transition-all duration-300 ${
+          isMobile
+            ? isMobileMenuOpen
+              ? 'w-64 translate-x-0 z-50 opacity-100'
+              : 'w-64 -translate-x-full opacity-0 pointer-events-none'
+            : isExpanded
+            ? 'w-64 z-50 opacity-100'
+            : 'w-20 z-50 opacity-100'
         }`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <div className="flex flex-col h-full py-6">
+        <div className="flex flex-col h-full py-4 md:py-6">
           {/* Logo */}
-          <Link to="/" onClick={handleMenuClick} className="flex items-center px-4 mb-8">
-            <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center shadow-lg flex-shrink-0">
-              <span className="text-primary-600 font-bold text-xl">TS</span>
+          <Link to="/" onClick={handleMenuClick} className="flex items-center px-2 md:px-4 mb-6 md:mb-8">
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-lg flex items-center justify-center shadow-lg flex-shrink-0">
+              <span className="text-primary-600 font-bold text-lg md:text-xl">TS</span>
             </div>
             <span
               className={`ml-3 text-gray-800 font-bold text-lg whitespace-nowrap transition-all duration-300 ${
-                isExpanded ? 'opacity-100 w-auto' : 'opacity-0 w-0 overflow-hidden'
+                (isMobile && isMobileMenuOpen) || (!isMobile && isExpanded)
+                  ? 'opacity-100 w-auto'
+                  : 'opacity-0 w-0 overflow-hidden'
               }`}
             >
               TechServices
@@ -59,7 +113,7 @@ const Navbar: React.FC = () => {
           </Link>
 
           {/* Navigation Items */}
-          <div className="flex-1 flex flex-col space-y-2 px-3">
+          <div className="flex-1 flex flex-col space-y-1 md:space-y-2 px-2 md:px-3">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = location.pathname === item.path;
@@ -69,16 +123,18 @@ const Navbar: React.FC = () => {
                   key={item.path}
                   to={item.path}
                   onClick={handleMenuClick}
-                  className={`flex items-center px-3 py-3 rounded-lg transition-all duration-200 ${
+                  className={`flex items-center px-2 md:px-3 py-2 md:py-3 rounded-lg transition-all duration-200 ${
                     isActive
                       ? 'bg-primary-600 text-white shadow-lg'
                       : 'text-gray-800 hover:bg-primary-100'
                   }`}
                 >
-                  <Icon size={24} className="flex-shrink-0" />
+                  <Icon size={20} className="flex-shrink-0 md:w-6 md:h-6" />
                   <span
                     className={`ml-4 font-medium whitespace-nowrap transition-all duration-300 ${
-                      isExpanded ? 'opacity-100 w-auto' : 'opacity-0 w-0 overflow-hidden'
+                      (isMobile && isMobileMenuOpen) || (!isMobile && isExpanded)
+                        ? 'opacity-100 w-auto'
+                        : 'opacity-0 w-0 overflow-hidden'
                     }`}
                   >
                     {item.label}
@@ -89,18 +145,20 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* User Section */}
-          <div className="px-3 mt-auto pt-4 border-t border-gray-300">
+          <div className="px-2 md:px-3 mt-auto pt-3 md:pt-4 border-t border-gray-300">
             {isAuthenticated ? (
               <>
                 <Link
                   to="/client"
                   onClick={handleMenuClick}
-                  className="flex items-center px-3 py-3 rounded-lg text-gray-800 hover:bg-primary-100 transition-all duration-200 mb-2"
+                  className="flex items-center px-2 md:px-3 py-2 md:py-3 rounded-lg text-gray-800 hover:bg-primary-100 transition-all duration-200 mb-2"
                 >
-                  <User size={24} className="flex-shrink-0" />
+                  <User size={20} className="flex-shrink-0 md:w-6 md:h-6" />
                   <span
                     className={`ml-4 font-medium whitespace-nowrap transition-all duration-300 ${
-                      isExpanded ? 'opacity-100 w-auto' : 'opacity-0 w-0 overflow-hidden'
+                      (isMobile && isMobileMenuOpen) || (!isMobile && isExpanded)
+                        ? 'opacity-100 w-auto'
+                        : 'opacity-0 w-0 overflow-hidden'
                     }`}
                   >
                     Espace Client
@@ -111,12 +169,14 @@ const Navbar: React.FC = () => {
                     logout();
                     handleMenuClick();
                   }}
-                  className="flex items-center px-3 py-3 rounded-lg text-gray-800 hover:bg-red-100 transition-all duration-200 w-full"
+                  className="flex items-center px-2 md:px-3 py-2 md:py-3 rounded-lg text-gray-800 hover:bg-red-100 transition-all duration-200 w-full"
                 >
-                  <LogOut size={24} className="flex-shrink-0" />
+                  <LogOut size={20} className="flex-shrink-0 md:w-6 md:h-6" />
                   <span
                     className={`ml-4 font-medium whitespace-nowrap transition-all duration-300 ${
-                      isExpanded ? 'opacity-100 w-auto' : 'opacity-0 w-0 overflow-hidden'
+                      (isMobile && isMobileMenuOpen) || (!isMobile && isExpanded)
+                        ? 'opacity-100 w-auto'
+                        : 'opacity-0 w-0 overflow-hidden'
                     }`}
                   >
                     Déconnexion
@@ -127,12 +187,14 @@ const Navbar: React.FC = () => {
               <Link
                 to="/client"
                 onClick={handleMenuClick}
-                className="flex items-center px-3 py-3 rounded-lg bg-primary-600 text-white hover:bg-primary-700 transition-all duration-200 shadow-lg"
+                className="flex items-center px-2 md:px-3 py-2 md:py-3 rounded-lg bg-primary-600 text-white hover:bg-primary-700 transition-all duration-200 shadow-lg"
               >
-                <User size={24} className="flex-shrink-0" />
+                <User size={20} className="flex-shrink-0 md:w-6 md:h-6" />
                 <span
                   className={`ml-4 font-medium whitespace-nowrap transition-all duration-300 ${
-                    isExpanded ? 'opacity-100 w-auto' : 'opacity-0 w-0 overflow-hidden'
+                    (isMobile && isMobileMenuOpen) || (!isMobile && isExpanded)
+                      ? 'opacity-100 w-auto'
+                      : 'opacity-0 w-0 overflow-hidden'
                   }`}
                 >
                   Connexion

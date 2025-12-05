@@ -92,23 +92,23 @@ const Contact: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header Banner with Image */}
-      <section className="relative h-[400px] bg-cover bg-center" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1423666639041-f56000c27a9a?auto=format&fit=crop&w=1920&q=80)' }}>
+      <section className="relative h-[300px] md:h-[400px] bg-cover bg-center" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1423666639041-f56000c27a9a?auto=format&fit=crop&w=1920&q=80)' }}>
         {/* Overlay sombre pour lisibilité */}
         <div className="absolute inset-0 bg-black/40"></div>
 
         {/* Content */}
-        <div className="relative h-full container-custom flex flex-col justify-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">Contactez-nous</h1>
-          <p className="text-xl md:text-2xl text-white max-w-3xl">
+        <div className="relative h-full container-custom flex flex-col justify-center px-4">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-3 md:mb-4">Contactez-nous</h1>
+          <p className="text-base md:text-xl lg:text-2xl text-white max-w-3xl">
             Notre équipe d'experts est à votre disposition pour répondre à toutes vos questions et vous accompagner dans vos projets.
           </p>
         </div>
       </section>
 
       {/* Contact Info and Form */}
-      <section className="py-12">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <section className="py-8 md:py-12">
+        <div className="container-custom px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
             {/* Contact Information */}
             <div className="space-y-6">
               <Card>
@@ -262,27 +262,27 @@ const Contact: React.FC = () => {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-16 bg-white">
-        <div className="container-custom">
-          <h2 className="text-3xl font-bold text-center mb-12">Questions Fréquentes</h2>
-          <div className="max-w-3xl mx-auto space-y-6">
+      <section className="py-12 md:py-16 bg-white">
+        <div className="container-custom px-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12">Questions Fréquentes</h2>
+          <div className="max-w-3xl mx-auto space-y-4 md:space-y-6">
             <Card>
-              <h3 className="font-semibold text-lg mb-2">Quel est le délai de réponse ?</h3>
-              <p className="text-gray-600">
+              <h3 className="font-semibold text-base md:text-lg mb-2">Quel est le délai de réponse ?</h3>
+              <p className="text-sm md:text-base text-gray-600">
                 Nous nous engageons à répondre à toutes les demandes dans un délai de 24 heures ouvrées.
               </p>
             </Card>
 
             <Card>
-              <h3 className="font-semibold text-lg mb-2">Proposez-vous des devis gratuits ?</h3>
-              <p className="text-gray-600">
+              <h3 className="font-semibold text-base md:text-lg mb-2">Proposez-vous des devis gratuits ?</h3>
+              <p className="text-sm md:text-base text-gray-600">
                 Oui, nous établissons des devis détaillés et gratuits pour tous nos services après étude de votre besoin.
               </p>
             </Card>
 
             <Card>
-              <h3 className="font-semibold text-lg mb-2">Intervenez-vous dans toute la France ?</h3>
-              <p className="text-gray-600">
+              <h3 className="font-semibold text-base md:text-lg mb-2">Intervenez-vous dans toute la France ?</h3>
+              <p className="text-sm md:text-base text-gray-600">
                 Oui, nous intervenons sur l'ensemble du territoire français et dans certains pays européens.
               </p>
             </Card>

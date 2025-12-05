@@ -153,28 +153,28 @@ const Services: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header Banner with Image */}
-      <section className="relative h-[400px] bg-cover bg-center" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1920&q=80)' }}>
+      <section className="relative h-[300px] md:h-[400px] bg-cover bg-center" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1920&q=80)' }}>
         {/* Overlay sombre pour lisibilité */}
         <div className="absolute inset-0 bg-black/40"></div>
 
         {/* Content */}
-        <div className="relative h-full container-custom flex flex-col justify-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">Nos Services</h1>
-          <p className="text-xl md:text-2xl text-white max-w-3xl">
+        <div className="relative h-full container-custom flex flex-col justify-center px-4">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-3 md:mb-4">Nos Services</h1>
+          <p className="text-base md:text-xl lg:text-2xl text-white max-w-3xl">
             Des solutions complètes de certification, inspection, tests et formation pour garantir la conformité et la qualité de vos activités.
           </p>
         </div>
       </section>
 
       {/* Filters */}
-      <section className="bg-white shadow-md sticky top-16 z-40 py-6">
-        <div className="container-custom">
-          <div className="flex flex-wrap gap-3">
+      <section className="bg-white shadow-md sticky top-16 z-40 py-4 md:py-6">
+        <div className="container-custom px-4">
+          <div className="flex flex-wrap gap-2 md:gap-3">
             {categories.map((category) => (
               <button
                 key={category.id}
                 onClick={() => handleCategoryChange(category.id)}
-                className={`px-6 py-2 rounded-full font-medium transition-all ${
+                className={`px-4 md:px-6 py-1.5 md:py-2 rounded-full font-medium transition-all text-sm md:text-base ${
                   selectedCategory === category.id
                     ? 'bg-primary-600 text-white shadow-md'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -188,15 +188,15 @@ const Services: React.FC = () => {
       </section>
 
       {/* Services Grid */}
-      <section className="py-12">
-        <div className="container-custom">
-          <div className="mb-6">
-            <p className="text-gray-600">
+      <section className="py-8 md:py-12">
+        <div className="container-custom px-4">
+          <div className="mb-4 md:mb-6">
+            <p className="text-sm md:text-base text-gray-600">
               {filteredServices.length} service{filteredServices.length > 1 ? 's' : ''} trouvé{filteredServices.length > 1 ? 's' : ''}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {filteredServices.map((service) => (
               <Card key={service.id} hover>
                 <div className="mb-4">{getIcon(service.icon)}</div>

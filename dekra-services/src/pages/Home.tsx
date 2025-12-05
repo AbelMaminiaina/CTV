@@ -29,10 +29,10 @@ const AnimatedStat: React.FC<AnimatedStatProps> = ({
 
   return (
     <div ref={ref} className="text-center">
-      <div className="text-4xl font-bold text-gray-800 mb-2">
+      <div className="text-2xl md:text-4xl font-bold text-gray-800 mb-1 md:mb-2">
         {prefix}{count.toLocaleString()}{suffix}
       </div>
-      <div className="text-gray-600">{label}</div>
+      <div className="text-sm md:text-base text-gray-600">{label}</div>
     </div>
   );
 };
@@ -147,7 +147,7 @@ const Home: React.FC = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section with Carousel */}
-      <section className="relative h-[600px] overflow-hidden">
+      <section className="relative h-[500px] md:h-[600px] overflow-hidden">
         {/* Background Images - Dynamique */}
         {heroSlides.map((slide, index) => (
           <div
@@ -168,30 +168,30 @@ const Home: React.FC = () => {
         <div className="absolute inset-0 bg-black/10"></div>
 
         {/* Content */}
-        <div className="container-custom relative h-full flex items-center">
+        <div className="container-custom relative h-full flex items-center px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center w-full">
             {/* Left Content Box - Style DEKRA avec animation */}
-            <div className="bg-primary-700 text-white p-10 md:p-12 rounded-xl shadow-2xl max-w-2xl backdrop-blur-sm bg-opacity-95 transition-all duration-500">
-              <h1 className="text-3xl md:text-5xl font-bold mb-4 leading-tight transition-all duration-500">
+            <div className="bg-primary-700 text-white p-6 md:p-12 rounded-xl shadow-2xl max-w-2xl backdrop-blur-sm bg-opacity-95 transition-all duration-500">
+              <h1 className="text-2xl md:text-5xl font-bold mb-3 md:mb-4 leading-tight transition-all duration-500">
                 {currentHero.title}
               </h1>
-              <h2 className="text-xl md:text-2xl font-medium mb-6 text-white transition-all duration-500">
+              <h2 className="text-lg md:text-2xl font-medium mb-4 md:mb-6 text-white transition-all duration-500">
                 {currentHero.subtitle}
               </h2>
-              <p className="text-base md:text-lg mb-8 text-white/90 leading-relaxed transition-all duration-500">
+              <p className="text-sm md:text-lg mb-6 md:mb-8 text-white/90 leading-relaxed transition-all duration-500">
                 {currentHero.description}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 transition-all duration-500">
-                <Link to={currentHero.primaryLink} key={`primary-${currentSlide}`}>
-                  <button className="px-8 py-3 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-full transition-all duration-200 flex items-center justify-center gap-2 w-full sm:w-auto shadow-lg hover:shadow-xl">
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 transition-all duration-500">
+                <Link to={currentHero.primaryLink} key={`primary-${currentSlide}`} className="w-full sm:w-auto">
+                  <button className="px-6 md:px-8 py-2.5 md:py-3 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-full transition-all duration-200 flex items-center justify-center gap-2 w-full shadow-lg hover:shadow-xl text-sm md:text-base">
                     {currentHero.primaryBtn}
-                    <ArrowRight size={20} />
+                    <ArrowRight size={18} className="md:w-5 md:h-5" />
                   </button>
                 </Link>
-                <Link to={currentHero.secondaryLink} key={`secondary-${currentSlide}`}>
-                  <button className="px-8 py-3 border-2 border-white text-white hover:bg-white hover:text-gray-900 font-semibold rounded-full transition-all duration-200 flex items-center justify-center gap-2 w-full sm:w-auto">
+                <Link to={currentHero.secondaryLink} key={`secondary-${currentSlide}`} className="w-full sm:w-auto">
+                  <button className="px-6 md:px-8 py-2.5 md:py-3 border-2 border-white text-white hover:bg-white hover:text-gray-900 font-semibold rounded-full transition-all duration-200 flex items-center justify-center gap-2 w-full text-sm md:text-base">
                     {currentHero.secondaryBtn}
-                    <ArrowRight size={20} />
+                    <ArrowRight size={18} className="md:w-5 md:h-5" />
                   </button>
                 </Link>
               </div>
@@ -205,18 +205,18 @@ const Home: React.FC = () => {
         </div>
 
         {/* Carousel Navigation */}
-        <div className="absolute bottom-8 left-0 right-0">
-          <div className="container-custom flex justify-between items-center">
+        <div className="absolute bottom-4 md:bottom-8 left-0 right-0">
+          <div className="container-custom flex justify-between items-center px-4">
             {/* Dots */}
-            <div className="flex gap-2">
+            <div className="flex gap-1.5 md:gap-2">
               {heroSlides.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentSlide(index)}
-                  className={`h-2 rounded-full transition-all ${
+                  className={`h-1.5 md:h-2 rounded-full transition-all ${
                     index === currentSlide
-                      ? 'w-8 bg-white'
-                      : 'w-2 bg-white/50 hover:bg-white/75'
+                      ? 'w-6 md:w-8 bg-white'
+                      : 'w-1.5 md:w-2 bg-white/50 hover:bg-white/75'
                   }`}
                   aria-label={`Aller à la diapositive ${index + 1}`}
                 />
@@ -224,20 +224,20 @@ const Home: React.FC = () => {
             </div>
 
             {/* Arrow Buttons */}
-            <div className="flex gap-4">
+            <div className="flex gap-2 md:gap-4">
               <button
                 onClick={prevSlide}
-                className="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center text-white transition-colors"
+                className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center text-white transition-colors"
                 aria-label="Diapositive précédente"
               >
-                <ChevronLeft size={24} />
+                <ChevronLeft size={20} className="md:w-6 md:h-6" />
               </button>
               <button
                 onClick={nextSlide}
-                className="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center text-white transition-colors"
+                className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center text-white transition-colors"
                 aria-label="Diapositive suivante"
               >
-                <ChevronRight size={24} />
+                <ChevronRight size={20} className="md:w-6 md:h-6" />
               </button>
             </div>
           </div>
@@ -245,9 +245,9 @@ const Home: React.FC = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-12 bg-white">
-        <div className="container-custom">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <section className="py-8 md:py-12 bg-white">
+        <div className="container-custom px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
             {stats.map((stat, index) => (
               <AnimatedStat
                 key={index}
@@ -262,11 +262,11 @@ const Home: React.FC = () => {
       </section>
 
       {/* Services Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Nos Services</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+      <section className="py-12 md:py-16 bg-gray-50">
+        <div className="container-custom px-4">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-4">Nos Services</h2>
+            <p className="text-base md:text-xl text-gray-600 max-w-2xl mx-auto">
               Des solutions complètes pour répondre à tous vos besoins en matière de conformité et de qualité
             </p>
           </div>
@@ -318,37 +318,37 @@ const Home: React.FC = () => {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="py-16 bg-white">
-        <div className="container-custom">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+      <section className="py-12 md:py-16 bg-white">
+        <div className="container-custom px-4">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 md:mb-6">
                 Pourquoi Nous Choisir ?
               </h2>
-              <div className="space-y-4">
-                <div className="flex items-start space-x-4">
-                  <CheckCircle className="text-green-600 flex-shrink-0 mt-1" size={24} />
+              <div className="space-y-3 md:space-y-4">
+                <div className="flex items-start space-x-3 md:space-x-4">
+                  <CheckCircle className="text-green-600 flex-shrink-0 mt-1" size={20} />
                   <div>
-                    <h3 className="text-xl font-semibold mb-2">Expertise Reconnue</h3>
-                    <p className="text-gray-600">
+                    <h3 className="text-lg md:text-xl font-semibold mb-1 md:mb-2">Expertise Reconnue</h3>
+                    <p className="text-sm md:text-base text-gray-600">
                       Plus de 25 ans d'expérience dans les services techniques et certifications
                     </p>
                   </div>
                 </div>
-                <div className="flex items-start space-x-4">
-                  <CheckCircle className="text-green-600 flex-shrink-0 mt-1" size={24} />
+                <div className="flex items-start space-x-3 md:space-x-4">
+                  <CheckCircle className="text-green-600 flex-shrink-0 mt-1" size={20} />
                   <div>
-                    <h3 className="text-xl font-semibold mb-2">Normes Internationales</h3>
-                    <p className="text-gray-600">
+                    <h3 className="text-lg md:text-xl font-semibold mb-1 md:mb-2">Normes Internationales</h3>
+                    <p className="text-sm md:text-base text-gray-600">
                       Conformité aux standards ISO et aux réglementations internationales
                     </p>
                   </div>
                 </div>
-                <div className="flex items-start space-x-4">
-                  <CheckCircle className="text-green-600 flex-shrink-0 mt-1" size={24} />
+                <div className="flex items-start space-x-3 md:space-x-4">
+                  <CheckCircle className="text-green-600 flex-shrink-0 mt-1" size={20} />
                   <div>
-                    <h3 className="text-xl font-semibold mb-2">Accompagnement Personnalisé</h3>
-                    <p className="text-gray-600">
+                    <h3 className="text-lg md:text-xl font-semibold mb-1 md:mb-2">Accompagnement Personnalisé</h3>
+                    <p className="text-sm md:text-base text-gray-600">
                       Une équipe dédiée pour vous accompagner à chaque étape de votre projet
                     </p>
                   </div>
@@ -366,11 +366,11 @@ const Home: React.FC = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Ce Que Disent Nos Clients</h2>
-            <p className="text-xl text-gray-600">
+      <section className="py-12 md:py-16 bg-gray-50">
+        <div className="container-custom px-4">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-4">Ce Que Disent Nos Clients</h2>
+            <p className="text-base md:text-xl text-gray-600">
               La satisfaction de nos clients est notre priorité
             </p>
           </div>
@@ -395,19 +395,19 @@ const Home: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="relative py-20 bg-cover bg-center overflow-hidden" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1920&q=80)' }}>
+      <section className="relative py-12 md:py-20 bg-cover bg-center overflow-hidden" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1920&q=80)' }}>
         {/* Overlay sombre pour la lisibilité */}
         <div className="absolute inset-0 bg-black/40"></div>
 
-        <div className="container-custom text-center relative z-10">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">Prêt à Commencer ?</h2>
-          <p className="text-xl mb-8 text-white max-w-2xl mx-auto">
+        <div className="container-custom text-center relative z-10 px-4">
+          <h2 className="text-3xl md:text-5xl font-bold mb-4 md:mb-6 text-white">Prêt à Commencer ?</h2>
+          <p className="text-base md:text-xl mb-6 md:mb-8 text-white max-w-2xl mx-auto">
             Contactez-nous dès aujourd'hui pour discuter de vos besoins et découvrir comment nous pouvons vous aider
           </p>
-          <Link to="/contact">
-            <Button size="lg" className="bg-primary-600 text-white hover:bg-primary-700">
+          <Link to="/contact" className="inline-block w-full sm:w-auto">
+            <Button size="lg" className="bg-primary-600 text-white hover:bg-primary-700 w-full sm:w-auto px-6 md:px-8 py-2.5 md:py-3 text-sm md:text-base">
               Demander un devis gratuit
-              <ArrowRight className="ml-2 inline" size={20} />
+              <ArrowRight className="ml-2 inline" size={18} />
             </Button>
           </Link>
         </div>

@@ -102,27 +102,27 @@ const Solutions: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header Banner with Image */}
-      <section className="relative h-[400px] bg-cover bg-center" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1920&q=80)' }}>
+      <section className="relative h-[300px] md:h-[400px] bg-cover bg-center" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1920&q=80)' }}>
         {/* Overlay sombre pour lisibilité */}
         <div className="absolute inset-0 bg-black/40"></div>
 
         {/* Content */}
-        <div className="relative h-full container-custom flex flex-col justify-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">Nos Solutions par Secteur</h1>
-          <p className="text-xl md:text-2xl text-white max-w-3xl">
+        <div className="relative h-full container-custom flex flex-col justify-center px-4">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-3 md:mb-4">Nos Solutions par Secteur</h1>
+          <p className="text-base md:text-xl lg:text-2xl text-white max-w-3xl">
             Des solutions techniques sur mesure adaptées à chaque secteur d'activité pour garantir votre conformité et votre excellence opérationnelle.
           </p>
         </div>
       </section>
 
       {/* Introduction */}
-      <section className="py-12 bg-white">
-        <div className="container-custom">
+      <section className="py-8 md:py-12 bg-white">
+        <div className="container-custom px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 md:mb-4">
               Des Solutions Sectorielles Complètes
             </h2>
-            <p className="text-lg text-gray-600">
+            <p className="text-base md:text-lg text-gray-600">
               Fort de notre expertise multi-sectorielle, nous proposons des solutions techniques adaptées aux spécificités et exigences réglementaires de chaque industrie.
             </p>
           </div>
@@ -130,38 +130,38 @@ const Solutions: React.FC = () => {
       </section>
 
       {/* Solutions */}
-      <section className="py-12">
-        <div className="container-custom space-y-16">
+      <section className="py-8 md:py-12">
+        <div className="container-custom px-4 space-y-12 md:space-y-16">
           {solutions.map((solution, index) => (
             <div
               key={solution.id}
               className={`flex flex-col ${
                 index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
-              } gap-8 items-center`}
+              } gap-6 md:gap-8 items-center`}
             >
-              <div className="flex-1">
+              <div className="flex-1 w-full">
                 <Card className="h-full bg-gradient-to-br from-gray-50 to-gray-100">
-                  <div className="flex items-center justify-center h-64 text-gray-700">
+                  <div className="flex items-center justify-center h-48 md:h-64 text-gray-700">
                     {getIcon(solution.image)}
                   </div>
                 </Card>
               </div>
 
-              <div className="flex-1">
-                <h3 className="text-3xl font-bold text-gray-900 mb-4">{solution.title}</h3>
-                <p className="text-lg text-gray-600 mb-6">{solution.description}</p>
+              <div className="flex-1 w-full">
+                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 md:mb-4">{solution.title}</h3>
+                <p className="text-base md:text-lg text-gray-600 mb-4 md:mb-6">{solution.description}</p>
 
-                <div className="space-y-3 mb-6">
+                <div className="space-y-2 md:space-y-3 mb-4 md:mb-6">
                   {solution.features.map((feature, idx) => (
-                    <div key={idx} className="flex items-start space-x-3">
-                      <CheckCircle className="text-green-600 flex-shrink-0 mt-1" size={20} />
-                      <span className="text-gray-700">{feature}</span>
+                    <div key={idx} className="flex items-start space-x-2 md:space-x-3">
+                      <CheckCircle className="text-green-600 flex-shrink-0 mt-1" size={18} />
+                      <span className="text-sm md:text-base text-gray-700">{feature}</span>
                     </div>
                   ))}
                 </div>
 
-                <Link to="/contact">
-                  <Button>
+                <Link to="/contact" className="inline-block w-full sm:w-auto">
+                  <Button className="w-full sm:w-auto">
                     En savoir plus
                     <ArrowRight className="ml-2 inline" size={16} />
                   </Button>
@@ -173,39 +173,39 @@ const Solutions: React.FC = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-16 bg-white">
-        <div className="container-custom">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+      <section className="py-12 md:py-16 bg-white">
+        <div className="container-custom px-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-900 mb-8 md:mb-12">
             Les Avantages de Nos Solutions
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             <Card className="text-center">
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CheckCircle className="text-gray-700" size={32} />
+              <div className="w-14 h-14 md:w-16 md:h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+                <CheckCircle className="text-gray-700" size={28} />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Expertise Sectorielle</h3>
-              <p className="text-gray-600">
+              <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3">Expertise Sectorielle</h3>
+              <p className="text-sm md:text-base text-gray-600">
                 Nos experts connaissent parfaitement les spécificités et réglementations de chaque secteur.
               </p>
             </Card>
 
             <Card className="text-center">
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Globe className="text-gray-700" size={32} />
+              <div className="w-14 h-14 md:w-16 md:h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+                <Globe className="text-gray-700" size={28} />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Normes Internationales</h3>
-              <p className="text-gray-600">
+              <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3">Normes Internationales</h3>
+              <p className="text-sm md:text-base text-gray-600">
                 Conformité aux standards internationaux pour faciliter votre développement à l'export.
               </p>
             </Card>
 
             <Card className="text-center">
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Building2 className="text-gray-700" size={32} />
+              <div className="w-14 h-14 md:w-16 md:h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+                <Building2 className="text-gray-700" size={28} />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Solutions Sur Mesure</h3>
-              <p className="text-gray-600">
+              <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3">Solutions Sur Mesure</h3>
+              <p className="text-sm md:text-base text-gray-600">
                 Approche personnalisée pour répondre précisément à vos besoins et contraintes.
               </p>
             </Card>
@@ -214,14 +214,14 @@ const Solutions: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container-custom">
-          <div className="bg-gradient-to-r from-primary-600 to-primary-800 rounded-2xl p-12 text-center text-white">
-            <h2 className="text-3xl font-bold mb-4">Discutons de Votre Projet</h2>
-            <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
+      <section className="py-12 md:py-16 bg-gray-50">
+        <div className="container-custom px-4">
+          <div className="bg-gradient-to-r from-primary-600 to-primary-800 rounded-2xl p-6 md:p-12 text-center text-white">
+            <h2 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4">Discutons de Votre Projet</h2>
+            <p className="text-base md:text-xl text-primary-100 mb-6 md:mb-8 max-w-2xl mx-auto">
               Nos experts sectoriels sont à votre écoute pour élaborer la solution la plus adaptée à votre activité.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
               <Link to="/contact">
                 <Button size="lg" className="bg-white text-primary-600 hover:bg-primary-50">
                   Demander une étude
