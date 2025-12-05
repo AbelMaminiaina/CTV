@@ -67,30 +67,23 @@ const Navbar: React.FC = () => {
       {/* Bouton hamburger pour mobile */}
       <button
         onClick={toggleMobileMenu}
-        className="fixed top-4 left-4 z-[60] md:hidden w-12 h-12 bg-white/90 backdrop-blur-md rounded-lg shadow-lg flex items-center justify-center text-gray-800 hover:bg-white transition-colors"
+        className="fixed top-4 left-4 z-[70] md:hidden w-12 h-12 bg-white/90 backdrop-blur-md rounded-lg shadow-lg flex items-center justify-center text-gray-800 hover:bg-white transition-colors"
         aria-label="Toggle menu"
       >
         {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
 
-      {/* Overlay pour mobile */}
-      {isMobile && isMobileMenuOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40"
-          onClick={() => setIsMobileMenuOpen(false)}
-        />
-      )}
 
       {/* Vertical Sidebar */}
       <nav
-        className={`fixed left-0 top-0 h-screen bg-white/5 backdrop-blur-md shadow-2xl transition-all duration-300 ${
+        className={`fixed left-0 top-0 h-screen shadow-2xl transition-all duration-300 ${
           isMobile
             ? isMobileMenuOpen
-              ? 'w-64 translate-x-0 z-50 opacity-100'
-              : 'w-64 -translate-x-full opacity-0 pointer-events-none'
+              ? 'w-full translate-x-0 z-[65] opacity-100 bg-white'
+              : 'w-full -translate-x-full opacity-0 pointer-events-none bg-white'
             : isExpanded
-            ? 'w-64 z-50 opacity-100'
-            : 'w-20 z-50 opacity-100'
+            ? 'w-64 z-50 opacity-100 bg-white/5 backdrop-blur-md'
+            : 'w-20 z-50 opacity-100 bg-white/5 backdrop-blur-md'
         }`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
